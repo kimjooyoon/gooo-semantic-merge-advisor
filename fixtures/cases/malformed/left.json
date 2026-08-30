@@ -1,0 +1,8 @@
+{
+  "schema": "not-a-manifest",
+  "tree_id": "malformed-left",
+  "tree_oid": "sha1:malformed",
+  "immutable": true,
+  "repository_writes": 0,
+  "entries": []
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "gooo/semantic-merge-advisor/manifest/v1",
+  "tree_id": "left-unknown",
+  "tree_oid": "sha1:left-unknown-tree",
+  "immutable": true,
+  "repository_writes": 0,
+  "entries": [
+    {
+      "path": "internal/unobservable.go",
+      "blob": "sha256:left-unknown-unobservable",
+      "status": "active",
+      "ownership": "new",
+      "generation": 1,
+      "new_file": true,
+      "previous_file": false,
+      "symbols": [{"id":"symbol.unobservable", "authority":"left", "version":"v1", "observable":false}],
+      "claims": [{"id":"claim.unobservable", "authority":"left", "version":"v1", "observable":false}],
+      "producers": [{"id":"producer.unobservable", "authority":"left", "version":"v1", "observable":false}],
+      "evaluators": [{"id":"evaluator.unobservable", "authority":"left", "version":"v1", "observable":false}]
+    }
+  ]
+}

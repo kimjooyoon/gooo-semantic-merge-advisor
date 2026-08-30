@@ -1,0 +1,13 @@
+package semantic_merge_advisor
+
+namespace merge_authority
+
+activity foundationDriver()
+activity foundationOutcome()
+activity foundationGuardrail()
+activity coherenceDriver()
+activity coherenceOutcome()
+activity coherenceGuardrail()
+activity regressionDriver()
+activity regressionOutcome()
+activity regressionGuardrail()

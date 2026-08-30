@@ -1,0 +1,72 @@
+name: Conformance
+
+on:
+  push:
+    branches: [main, 'agent/**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  gofmt:
+    name: gofmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+      - run: test -z "$(gofmt -l .)"
+
+  go-vet:
+    name: go vet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+      - run: go vet ./...
+
+  go-test:
+    name: go test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+      - run: go test ./...
+
+  go-test-race:
+    name: go test -race
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+      - run: go test -race ./...
+
+  semantic-conformance:
+    name: Semantic conformance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+      - run: sudo apt-get update && sudo apt-get install --yes jq
+      - run: bash scripts/ci-conformance.sh
+
+  ci-policy:
+    name: CI policy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.27.x'
+      - run: bash scripts/ci-policy.sh

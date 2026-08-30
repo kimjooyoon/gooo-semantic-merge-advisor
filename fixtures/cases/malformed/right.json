@@ -1,0 +1,8 @@
+{
+  "schema": "gooo/semantic-merge-advisor/manifest/v1",
+  "tree_id": "malformed-right",
+  "tree_oid": "sha1:malformed-right",
+  "immutable": true,
+  "repository_writes": 0,
+  "entries": []
+}
