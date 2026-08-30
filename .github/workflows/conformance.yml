@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: '1.27.x'
-      - run: test -z "$(gofmt -l .)"
+      - run: test -z "$(gofmt -l $(git ls-files '*.go'))"
 
   go-vet:
     name: go vet
