@@ -66,19 +66,19 @@ func GenerateFiles(input BuildInput, phaseWallMS map[string]int64, peakRSSBytes 
 			return Generated{}, nil, err
 		}
 		receipt := AuthorityReceipt{
-			Schema:                ReceiptSchema,
-			State:                 plan.State,
-			Decision:              plan.Decision,
-			LeftTreeDigest:        input.LeftDigest,
-			RightTreeDigest:       input.RightDigest,
-			AuthorityDigest:       input.AuthorityDigest,
-			DenominatorDigest:     input.DenominatorDigest,
-			SourceDigest:          Digest(input.Source),
-			OntologyReference:     input.Authority.OntologyReference,
-			OntologyReadOnly:      input.Authority.OntologyReadOnly,
-			SourceTextMerged:      false,
+			Schema:            ReceiptSchema,
+			State:             plan.State,
+			Decision:          plan.Decision,
+			LeftTreeDigest:    input.LeftDigest,
+			RightTreeDigest:   input.RightDigest,
+			AuthorityDigest:   input.AuthorityDigest,
+			DenominatorDigest: input.DenominatorDigest,
+			SourceDigest:      Digest(input.Source),
+			OntologyReference: input.Authority.OntologyReference,
+			OntologyReadOnly:  input.Authority.OntologyReadOnly,
+			SourceTextMerged:  false,
 			ArtifactDigests: map[string]string{
-				"merge-proposal.json":      Digest(proposalBytes),
+				"merge-proposal.json":        Digest(proposalBytes),
 				"counterexample-report.json": Digest(counterexampleBytes),
 			},
 			InputRepositoryWrites: 0,
@@ -92,8 +92,8 @@ func GenerateFiles(input BuildInput, phaseWallMS map[string]int64, peakRSSBytes 
 		totalBytes := int64(len(proposalBytes) + len(receiptBytes) + len(counterexampleBytes))
 		final = Generated{Proposal: plan, Receipt: receipt, Counterexample: report}
 		files = map[string][]byte{
-			"merge-proposal.json":       proposalBytes,
-			"authority-receipt.json":    receiptBytes,
+			"merge-proposal.json":        proposalBytes,
+			"authority-receipt.json":     receiptBytes,
 			"counterexample-report.json": counterexampleBytes,
 		}
 		if totalBytes == metrics.ArtifactBytes {

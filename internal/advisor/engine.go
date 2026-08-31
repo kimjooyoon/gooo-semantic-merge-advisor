@@ -9,16 +9,16 @@ import (
 )
 
 type BuildInput struct {
-	Left               Manifest
-	Right              Manifest
-	Authority          AuthorityDeclaration
-	Denominator        Denominator
-	SourcePath         string
-	Source             []byte
-	LeftDigest         string
-	RightDigest        string
-	AuthorityDigest    string
-	DenominatorDigest  string
+	Left              Manifest
+	Right             Manifest
+	Authority         AuthorityDeclaration
+	Denominator       Denominator
+	SourcePath        string
+	Source            []byte
+	LeftDigest        string
+	RightDigest       string
+	AuthorityDigest   string
+	DenominatorDigest string
 }
 
 func ValidateManifest(manifest Manifest) error {

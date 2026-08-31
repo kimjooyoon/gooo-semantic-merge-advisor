@@ -7,20 +7,20 @@ import (
 )
 
 const (
-	ManifestSchema    = "gooo/semantic-merge-advisor/manifest/v1"
-	AuthoritySchema   = "gooo/semantic-merge-advisor/authority/v1"
-	DenominatorSchema = "gooo/semantic-merge-advisor/denominator/v1"
-	ProposalSchema    = "gooo/semantic-merge-advisor/merge-proposal/v1"
-	ReceiptSchema     = "gooo/semantic-merge-advisor/authority-receipt/v1"
+	ManifestSchema       = "gooo/semantic-merge-advisor/manifest/v1"
+	AuthoritySchema      = "gooo/semantic-merge-advisor/authority/v1"
+	DenominatorSchema    = "gooo/semantic-merge-advisor/denominator/v1"
+	ProposalSchema       = "gooo/semantic-merge-advisor/merge-proposal/v1"
+	ReceiptSchema        = "gooo/semantic-merge-advisor/authority-receipt/v1"
 	CounterexampleSchema = "gooo/semantic-merge-advisor/counterexample-report/v1"
 
 	StateClosed  = "CLOSED"
 	StateUnknown = "UNKNOWN"
 	StateRefuted = "REFUTED"
 
-	DecisionUnion     = "UNION"
-	DecisionUnknown   = "PRESERVE_UNKNOWN"
-	DecisionRefuted   = "REJECT_REFUTED"
+	DecisionUnion    = "UNION"
+	DecisionUnknown  = "PRESERVE_UNKNOWN"
+	DecisionRefuted  = "REJECT_REFUTED"
 	FixedDenominator = 9
 )
 
@@ -29,12 +29,12 @@ var Precedence = []string{StateRefuted, StateUnknown, StateClosed}
 // Manifest is a semantic, immutable view of a Git tree. It intentionally has
 // no source-text field: the advisor reasons over declared observations only.
 type Manifest struct {
-	Schema             string          `json:"schema"`
-	TreeID             string          `json:"tree_id"`
-	TreeOID            string          `json:"tree_oid"`
-	Immutable          bool            `json:"immutable"`
-	RepositoryWrites   int             `json:"repository_writes"`
-	Entries            []ManifestEntry `json:"entries"`
+	Schema           string          `json:"schema"`
+	TreeID           string          `json:"tree_id"`
+	TreeOID          string          `json:"tree_oid"`
+	Immutable        bool            `json:"immutable"`
+	RepositoryWrites int             `json:"repository_writes"`
+	Entries          []ManifestEntry `json:"entries"`
 }
 
 type ManifestEntry struct {
@@ -61,10 +61,10 @@ type Observation struct {
 }
 
 type AuthorityDeclaration struct {
-	Schema             string            `json:"schema"`
-	Phase              string            `json:"phase"`
-	OntologyReference  string            `json:"ontology_reference"`
-	OntologyReadOnly   bool              `json:"ontology_read_only"`
+	Schema            string            `json:"schema"`
+	Phase             string            `json:"phase"`
+	OntologyReference string            `json:"ontology_reference"`
+	OntologyReadOnly  bool              `json:"ontology_read_only"`
 	Activities        []ActivityBinding `json:"activities"`
 }
 
@@ -80,17 +80,17 @@ type ActivityBinding struct {
 }
 
 type Denominator struct {
-	Schema           string             `json:"schema"`
-	DenominatorID    string             `json:"denominator_id"`
-	Total            int                `json:"total"`
-	Cells            []DenominatorCell  `json:"cells"`
+	Schema        string            `json:"schema"`
+	DenominatorID string            `json:"denominator_id"`
+	Total         int               `json:"total"`
+	Cells         []DenominatorCell `json:"cells"`
 }
 
 type DenominatorCell struct {
-	Ordinal       int    `json:"ordinal"`
-	Activity      string `json:"activity"`
-	MetricID      string `json:"metric_id"`
-	ProofChoice   string `json:"proof_choice"`
+	Ordinal        int    `json:"ordinal"`
+	Activity       string `json:"activity"`
+	MetricID       string `json:"metric_id"`
+	ProofChoice    string `json:"proof_choice"`
 	IndicatorClass string `json:"indicator_class"`
 }
 
@@ -112,16 +112,16 @@ type Candidate struct {
 }
 
 type PlanItem struct {
-	Kind            string      `json:"kind"`
-	Identity        string      `json:"identity"`
-	State           string      `json:"state"`
-	Action          string      `json:"action"`
-	CandidateCount  int         `json:"candidate_count"`
-	AuthorityCount  int         `json:"authority_count"`
-	ExactlyOne      bool        `json:"exactly_one"`
-	Candidates      []Candidate `json:"candidates"`
-	Reasons         []string    `json:"reasons,omitempty"`
-	Unknown         *Unknown   `json:"unknown,omitempty"`
+	Kind           string      `json:"kind"`
+	Identity       string      `json:"identity"`
+	State          string      `json:"state"`
+	Action         string      `json:"action"`
+	CandidateCount int         `json:"candidate_count"`
+	AuthorityCount int         `json:"authority_count"`
+	ExactlyOne     bool        `json:"exactly_one"`
+	Candidates     []Candidate `json:"candidates"`
+	Reasons        []string    `json:"reasons,omitempty"`
+	Unknown        *Unknown    `json:"unknown,omitempty"`
 }
 
 type BindingCheck struct {
@@ -155,33 +155,33 @@ type Unknown struct {
 }
 
 type Metrics struct {
-	PhaseWallMS       map[string]int64 `json:"phase_wall_ms"`
-	PeakRSSBytes      int64            `json:"peak_rss_bytes"`
-	ArtifactFiles     int              `json:"artifact_files"`
-	ArtifactBytes     int64            `json:"artifact_bytes"`
-	RepositoryWrites  int              `json:"repository_writes"`
-	InputRepositoryWrites int          `json:"input_repository_writes"`
-	LocalTestsRun     int              `json:"local_tests_run"`
+	PhaseWallMS           map[string]int64 `json:"phase_wall_ms"`
+	PeakRSSBytes          int64            `json:"peak_rss_bytes"`
+	ArtifactFiles         int              `json:"artifact_files"`
+	ArtifactBytes         int64            `json:"artifact_bytes"`
+	RepositoryWrites      int              `json:"repository_writes"`
+	InputRepositoryWrites int              `json:"input_repository_writes"`
+	LocalTestsRun         int              `json:"local_tests_run"`
 }
 
 type Plan struct {
-	Schema              string             `json:"schema"`
-	Decision            string             `json:"decision"`
-	State               string             `json:"state"`
-	Precedence          []string           `json:"precedence"`
-	LeftTreeID          string             `json:"left_tree_id"`
-	RightTreeID         string             `json:"right_tree_id"`
-	LeftTreeDigest      string             `json:"left_tree_digest"`
-	RightTreeDigest     string             `json:"right_tree_digest"`
-	AuthorityDigest     string             `json:"authority_digest"`
-	DenominatorDigest   string             `json:"denominator_digest"`
-	SourceDigest        string             `json:"source_digest"`
-	SourceTextMerged    bool               `json:"source_text_merged"`
-	AuthorityBindings   []BindingCheck     `json:"authority_bindings"`
-	Cardinality         []CardinalityCheck `json:"cardinality"`
-	Items               []PlanItem         `json:"items"`
+	Schema                string             `json:"schema"`
+	Decision              string             `json:"decision"`
+	State                 string             `json:"state"`
+	Precedence            []string           `json:"precedence"`
+	LeftTreeID            string             `json:"left_tree_id"`
+	RightTreeID           string             `json:"right_tree_id"`
+	LeftTreeDigest        string             `json:"left_tree_digest"`
+	RightTreeDigest       string             `json:"right_tree_digest"`
+	AuthorityDigest       string             `json:"authority_digest"`
+	DenominatorDigest     string             `json:"denominator_digest"`
+	SourceDigest          string             `json:"source_digest"`
+	SourceTextMerged      bool               `json:"source_text_merged"`
+	AuthorityBindings     []BindingCheck     `json:"authority_bindings"`
+	Cardinality           []CardinalityCheck `json:"cardinality"`
+	Items                 []PlanItem         `json:"items"`
 	InputRepositoryWrites int              `json:"input_repository_writes"`
-	Metrics             Metrics            `json:"metrics"`
+	Metrics               Metrics            `json:"metrics"`
 }
 
 type Counterexample struct {
@@ -198,13 +198,13 @@ type UnknownWitness struct {
 }
 
 type CounterexampleReport struct {
-	Schema                string             `json:"schema"`
-	State                 string             `json:"state"`
-	Precedence            []string           `json:"precedence"`
-	Refutations           []Counterexample   `json:"refutations"`
-	Unknowns              []UnknownWitness  `json:"unknowns"`
-	InputRepositoryWrites int                `json:"input_repository_writes"`
-	Metrics               Metrics            `json:"metrics"`
+	Schema                string           `json:"schema"`
+	State                 string           `json:"state"`
+	Precedence            []string         `json:"precedence"`
+	Refutations           []Counterexample `json:"refutations"`
+	Unknowns              []UnknownWitness `json:"unknowns"`
+	InputRepositoryWrites int              `json:"input_repository_writes"`
+	Metrics               Metrics          `json:"metrics"`
 }
 
 type AuthorityReceipt struct {
@@ -226,8 +226,8 @@ type AuthorityReceipt struct {
 }
 
 type Generated struct {
-	Proposal     Plan
-	Receipt      AuthorityReceipt
+	Proposal       Plan
+	Receipt        AuthorityReceipt
 	Counterexample CounterexampleReport
 }
 
