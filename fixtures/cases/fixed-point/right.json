@@ -1,0 +1,8 @@
+{
+  "schema": "gooo/semantic-merge-advisor/manifest/v1",
+  "tree_id": "right-fixed-point",
+  "tree_oid": "sha1:right-fixed-point",
+  "immutable": true,
+  "repository_writes": 0,
+  "entries": []
+}

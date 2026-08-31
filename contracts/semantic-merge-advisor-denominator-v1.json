@@ -1,0 +1,16 @@
+{
+  "schema": "gooo/semantic-merge-advisor/denominator/v1",
+  "denominator_id": "gooo://semantic-merge-advisor/denominator/v1",
+  "total": 9,
+  "cells": [
+    {"ordinal": 1, "activity": "foundationDriver", "metric_id": "metric.foundation.driver", "proof_choice": "FOUNDATION", "indicator_class": "DRIVER"},
+    {"ordinal": 2, "activity": "foundationOutcome", "metric_id": "metric.foundation.outcome", "proof_choice": "FOUNDATION", "indicator_class": "OUTCOME"},
+    {"ordinal": 3, "activity": "foundationGuardrail", "metric_id": "metric.foundation.guardrail", "proof_choice": "FOUNDATION", "indicator_class": "GUARDRAIL"},
+    {"ordinal": 4, "activity": "coherenceDriver", "metric_id": "metric.coherence.driver", "proof_choice": "COHERENCE", "indicator_class": "DRIVER"},
+    {"ordinal": 5, "activity": "coherenceOutcome", "metric_id": "metric.coherence.outcome", "proof_choice": "COHERENCE", "indicator_class": "OUTCOME"},
+    {"ordinal": 6, "activity": "coherenceGuardrail", "metric_id": "metric.coherence.guardrail", "proof_choice": "COHERENCE", "indicator_class": "GUARDRAIL"},
+    {"ordinal": 7, "activity": "regressionDriver", "metric_id": "metric.regression.driver", "proof_choice": "REGRESSION", "indicator_class": "DRIVER"},
+    {"ordinal": 8, "activity": "regressionOutcome", "metric_id": "metric.regression.outcome", "proof_choice": "REGRESSION", "indicator_class": "OUTCOME"},
+    {"ordinal": 9, "activity": "regressionGuardrail", "metric_id": "metric.regression.guardrail", "proof_choice": "REGRESSION", "indicator_class": "GUARDRAIL"}
+  ]
+}

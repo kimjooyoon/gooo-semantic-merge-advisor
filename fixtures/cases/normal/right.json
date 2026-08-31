@@ -1,0 +1,22 @@
+{
+  "schema": "gooo/semantic-merge-advisor/manifest/v1",
+  "tree_id": "right-normal",
+  "tree_oid": "sha1:right-normal-tree",
+  "immutable": true,
+  "repository_writes": 0,
+  "entries": [
+    {
+      "path": "internal/validate.go",
+      "blob": "sha256:right-normal-validate",
+      "status": "active",
+      "ownership": "new",
+      "generation": 1,
+      "new_file": true,
+      "previous_file": false,
+      "symbols": [{"id":"symbol.validate", "authority":"right", "version":"v1", "observable":true}],
+      "claims": [{"id":"claim.validate", "authority":"right", "version":"v1", "observable":true}],
+      "producers": [{"id":"producer.validate", "authority":"right", "version":"v1", "observable":true}],
+      "evaluators": [{"id":"evaluator.validate", "authority":"right", "version":"v1", "observable":true}]
+    }
+  ]
+}

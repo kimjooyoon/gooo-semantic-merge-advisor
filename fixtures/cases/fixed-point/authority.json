@@ -1,0 +1,7 @@
+{
+  "schema": "gooo/semantic-merge-advisor/authority/v1",
+  "phase": "FIXED_POINT",
+  "ontology_reference": "github.com/kimjooyoon/meta-ontology-go",
+  "ontology_read_only": true,
+  "activities": []
+}

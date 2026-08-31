@@ -1,0 +1,22 @@
+{
+  "schema": "gooo/semantic-merge-advisor/manifest/v1",
+  "tree_id": "left-normal",
+  "tree_oid": "sha1:left-normal-tree",
+  "immutable": true,
+  "repository_writes": 0,
+  "entries": [
+    {
+      "path": "internal/normalize.go",
+      "blob": "sha256:left-normal-normalize",
+      "status": "active",
+      "ownership": "new",
+      "generation": 1,
+      "new_file": true,
+      "previous_file": false,
+      "symbols": [{"id":"symbol.normalize", "authority":"left", "version":"v1", "observable":true}],
+      "claims": [{"id":"claim.normalize", "authority":"left", "version":"v1", "observable":true}],
+      "producers": [{"id":"producer.normalize", "authority":"left", "version":"v1", "observable":true}],
+      "evaluators": [{"id":"evaluator.normalize", "authority":"left", "version":"v1", "observable":true}]
+    }
+  ]
+}

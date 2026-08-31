@@ -1,0 +1,52 @@
+{
+  "schema": "gooo/semantic-merge-advisor/manifest/v1",
+  "tree_id": "right-refuted",
+  "tree_oid": "sha1:right-refuted-tree",
+  "immutable": true,
+  "repository_writes": 0,
+  "entries": [
+    {
+      "path": "internal/helpers_v2.go",
+      "blob": "sha256:right-helper-new",
+      "status": "active",
+      "ownership": "new",
+      "generation": 2,
+      "new_file": true,
+      "previous_file": false,
+      "symbols": [{"id":"symbol.normalizeHelper", "authority":"core", "version":"v2", "observable":true}],
+      "producers": [{"id":"producer.normalizeHelper", "authority":"core", "version":"v2", "observable":true}]
+    },
+    {
+      "path": "internal/candidate_definition_v2.go",
+      "blob": "sha256:right-candidate-new",
+      "status": "active",
+      "ownership": "new",
+      "generation": 2,
+      "new_file": true,
+      "previous_file": false,
+      "claims": [{"id":"claim.candidateDefinition", "authority":"core", "version":"v2", "observable":true}],
+      "producers": [{"id":"producer.candidateDefinition", "authority":"core", "version":"v2", "observable":true}],
+      "evaluators": [{"id":"evaluator.candidateDefinition", "authority":"core", "version":"v2", "observable":true}]
+    },
+    {
+      "path": "internal/evaluation_v2.go",
+      "blob": "sha256:right-evaluation",
+      "status": "active",
+      "ownership": "active",
+      "generation": 2,
+      "new_file": true,
+      "previous_file": false,
+      "evaluators": [{"id":"evaluator.shared", "authority":"evaluator", "version":"v2", "observable":true}]
+    },
+    {
+      "path": "internal/authority_v2.go",
+      "blob": "sha256:right-authority",
+      "status": "active",
+      "ownership": "active",
+      "generation": 2,
+      "new_file": true,
+      "previous_file": false,
+      "claims": [{"id":"claim.multipleAuthority", "authority":"right-authority", "version":"v1", "observable":true}]
+    }
+  ]
+}
