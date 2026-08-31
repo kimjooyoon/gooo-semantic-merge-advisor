@@ -41,14 +41,14 @@ func phaseMetrics(rawDurations map[string]int64, authority AuthorityDeclaration)
 		}
 	}
 	return Metrics{
-		PhaseWallMS:              wallMS,
-		PhaseTelemetry:           telemetry,
-		PeakRSSBytes:             0,
-		ArtifactFiles:            3,
-		ArtifactBytes:            0,
-		RepositoryWrites:         0,
-		InputRepositoryWrites:    0,
-		LocalTestsRun:            0,
+		PhaseWallMS:           wallMS,
+		PhaseTelemetry:        telemetry,
+		PeakRSSBytes:          0,
+		ArtifactFiles:         3,
+		ArtifactBytes:         0,
+		RepositoryWrites:      0,
+		InputRepositoryWrites: 0,
+		LocalTestsRun:         0,
 	}, unknowns, nil
 }
 

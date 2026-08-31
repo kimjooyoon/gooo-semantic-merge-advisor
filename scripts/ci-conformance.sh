@@ -37,7 +37,7 @@ run_case duration-unknown duration-unknown/authority.json UNKNOWN
 
 jq -e 'all(.metrics.phase_telemetry[]; .duration_ns > 0 and .preferred_duration_unit != "UNKNOWN" and .preferred_duration_value > 0 and .unknown == null)' "${work_dir}/normal/merge-proposal.json" >/dev/null
 jq -e 'all(.metrics.phase_telemetry[]; .duration_ns == 0 and .duration_us == 0 and .duration_ms == 0 and .preferred_duration_unit == "UNKNOWN" and ((.unknown | keys | sort) == ["blocked_by", "next_operation", "reason", "stage", "step", "unknown_class"])) and (.duration_unknowns | length > 0)' "${work_dir}/duration-unknown/merge-proposal.json" >/dev/null
-jq -e 'all(.metrics.phase_telemetry as $telemetry | .metrics.phase_wall_ms | to_entries[]; .value == $telemetry[.key].duration_ms)' "${work_dir}/normal/merge-proposal.json" >/dev/null
+jq -e '(.metrics.phase_telemetry) as $telemetry | (.metrics.phase_wall_ms | to_entries) as $entries | all($entries[]; .value == $telemetry[.key].duration_ms)' "${work_dir}/normal/merge-proposal.json" >/dev/null
 
 jq -e 'all(.cardinality[]; .exactly_one == true)' "${work_dir}/normal/merge-proposal.json" >/dev/null
 jq -e 'all(.unknowns[]; ((.unknown | keys | sort) == ["blocked_by", "next_operation", "reason", "stage", "step", "unknown_class"]))' "${work_dir}/unknown/counterexample-report.json" >/dev/null
