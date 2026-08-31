@@ -87,7 +87,8 @@ func GenerateFiles(input BuildInput, phaseDurationNS map[string]int64, peakRSSBy
 		if err != nil {
 			return Generated{}, nil, err
 		}
-		receiptBytes, err := marshalReceipt(input, plan, metrics, proposalBytes, counterexampleBytes)
+		receipt := makeReceipt(input, plan, metrics, proposalBytes, counterexampleBytes)
+		receiptBytes, err := MarshalArtifact(receipt)
 		if err != nil {
 			return Generated{}, nil, err
 		}
@@ -107,7 +108,11 @@ func GenerateFiles(input BuildInput, phaseDurationNS map[string]int64, peakRSSBy
 }
 
 func marshalReceipt(input BuildInput, plan Plan, metrics Metrics, proposalBytes []byte, counterexampleBytes []byte) ([]byte, error) {
-	receipt := AuthorityReceipt{
+	return MarshalArtifact(makeReceipt(input, plan, metrics, proposalBytes, counterexampleBytes))
+}
+
+func makeReceipt(input BuildInput, plan Plan, metrics Metrics, proposalBytes []byte, counterexampleBytes []byte) AuthorityReceipt {
+	return AuthorityReceipt{
 		Schema:            ReceiptSchema,
 		State:             plan.State,
 		Decision:          plan.Decision,
@@ -128,7 +133,6 @@ func marshalReceipt(input BuildInput, plan Plan, metrics Metrics, proposalBytes 
 		RepositoryWrites:      0,
 		Metrics:               metrics,
 	}
-	return MarshalArtifact(receipt)
 }
 
 func applyDurationState(plan *Plan, report *CounterexampleReport, unknowns []UnknownWitness) {

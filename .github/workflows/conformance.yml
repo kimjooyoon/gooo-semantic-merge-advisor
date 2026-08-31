@@ -22,6 +22,7 @@ jobs:
           files="$(gofmt -l $(git ls-files '*.go'))"
           if test -n "${files}"; then
             printf '%s\n' "${files}"
+            gofmt -d ${files}
             exit 1
           fi
 
