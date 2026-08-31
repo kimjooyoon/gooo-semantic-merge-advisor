@@ -160,7 +160,7 @@ type Metrics struct {
 	ArtifactFiles         int              `json:"artifact_files"`
 	ArtifactBytes         int64            `json:"artifact_bytes"`
 	RepositoryWrites      int              `json:"repository_writes"`
-	InputRepositoryWrites int              `json:"input_repository_writes"`
+	InputRepositoryWrites int                `json:"input_repository_writes"`
 	LocalTestsRun         int              `json:"local_tests_run"`
 }
 
