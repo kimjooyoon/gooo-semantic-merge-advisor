@@ -66,6 +66,9 @@ type AuthorityDeclaration struct {
 	OntologyReference string            `json:"ontology_reference"`
 	OntologyReadOnly  bool              `json:"ontology_read_only"`
 	Activities        []ActivityBinding `json:"activities"`
+	MetaActivities    []ActivityBinding `json:"meta_activities"`
+	DurationObservable *bool             `json:"duration_observable,omitempty"`
+	DurationNS        map[string]int64  `json:"duration_ns,omitempty"`
 }
 
 type ActivityBinding struct {
@@ -135,6 +138,15 @@ type BindingCheck struct {
 	ExactlyOne        bool   `json:"exactly_one"`
 }
 
+type PhaseTelemetry struct {
+	DurationNS            int64    `json:"duration_ns"`
+	DurationUS            int64    `json:"duration_us"`
+	DurationMS            int64    `json:"duration_ms"`
+	PreferredDurationUnit string   `json:"preferred_duration_unit"`
+	PreferredDurationValue int64   `json:"preferred_duration_value"`
+	Unknown               *Unknown `json:"unknown,omitempty"`
+}
+
 type CardinalityCheck struct {
 	Kind           string `json:"kind"`
 	Identity       string `json:"identity"`
@@ -155,7 +167,8 @@ type Unknown struct {
 }
 
 type Metrics struct {
-	PhaseWallMS           map[string]int64 `json:"phase_wall_ms"`
+	PhaseWallMS              map[string]int64           `json:"phase_wall_ms"`
+	PhaseTelemetry           map[string]PhaseTelemetry  `json:"phase_telemetry"`
 	PeakRSSBytes          int64            `json:"peak_rss_bytes"`
 	ArtifactFiles         int              `json:"artifact_files"`
 	ArtifactBytes         int64            `json:"artifact_bytes"`
@@ -179,6 +192,7 @@ type Plan struct {
 	SourceDigest          string             `json:"source_digest"`
 	SourceTextMerged      bool               `json:"source_text_merged"`
 	AuthorityBindings     []BindingCheck     `json:"authority_bindings"`
+	DurationUnknowns      []UnknownWitness  `json:"duration_unknowns,omitempty"`
 	Cardinality           []CardinalityCheck `json:"cardinality"`
 	Items                 []PlanItem         `json:"items"`
 	InputRepositoryWrites int                `json:"input_repository_writes"`
@@ -204,6 +218,7 @@ type CounterexampleReport struct {
 	Precedence            []string         `json:"precedence"`
 	Refutations           []Counterexample `json:"refutations"`
 	Unknowns              []UnknownWitness `json:"unknowns"`
+	DurationUnknowns      []UnknownWitness `json:"duration_unknowns,omitempty"`
 	InputRepositoryWrites int              `json:"input_repository_writes"`
 	Metrics               Metrics          `json:"metrics"`
 }

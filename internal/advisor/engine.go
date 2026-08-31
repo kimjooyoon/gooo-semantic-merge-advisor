@@ -173,6 +173,32 @@ func ValidateAuthority(authority AuthorityDeclaration, denominator Denominator, 
 			return fmt.Errorf("denominator activity %q is absent from authority", activity)
 		}
 	}
+	if len(authority.MetaActivities) != 1 {
+		return errors.New("authority requires exactly one preferredDurationUnit meta activity")
+	}
+	meta := authority.MetaActivities[0]
+	if meta.Name != "preferredDurationUnit" {
+		return fmt.Errorf("unexpected duration meta activity %q", meta.Name)
+	}
+	if meta.SourcePath != sourcePath && !strings.HasSuffix(filepath.ToSlash(sourcePath), "/"+filepath.ToSlash(meta.SourcePath)) {
+		return errors.New("preferredDurationUnit source path does not bind to Gooo source")
+	}
+	if meta.SourceLine < 1 || lineByName[meta.Name] != meta.SourceLine {
+		return errors.New("preferredDurationUnit source line does not bind to Gooo source")
+	}
+	for _, value := range []string{meta.IRNode, meta.GeneratedArtifact, meta.Evaluator} {
+		if strings.TrimSpace(value) == "" {
+			return errors.New("preferredDurationUnit has an empty generated binding")
+		}
+	}
+	if seenLines[meta.SourceLine] || seenIR[meta.IRNode] || seenArtifacts[meta.GeneratedArtifact] || seenEvaluators[meta.Evaluator] {
+		return errors.New("preferredDurationUnit binding is not one-to-one")
+	}
+	for phase, duration := range authority.DurationNS {
+		if duration < 0 {
+			return fmt.Errorf("malformed duration for phase %q: %d ns", phase, duration)
+		}
+	}
 	return nil
 }
 
@@ -265,7 +291,7 @@ func Build(input BuildInput) (Plan, CounterexampleReport, error) {
 	if state == StateRefuted {
 		decision = DecisionRefuted
 	}
-	bindingChecks := make([]BindingCheck, 0, len(input.Authority.Activities))
+	bindingChecks := make([]BindingCheck, 0, len(input.Authority.Activities)+len(input.Authority.MetaActivities))
 	cellByActivity := make(map[string]DenominatorCell, len(input.Denominator.Cells))
 	for _, cell := range input.Denominator.Cells {
 		cellByActivity[cell.Activity] = cell
@@ -284,6 +310,17 @@ func Build(input BuildInput) (Plan, CounterexampleReport, error) {
 			ExactlyOne:        true,
 		})
 	}
+	meta := input.Authority.MetaActivities[0]
+	bindingChecks = append(bindingChecks, BindingCheck{
+		Activity:          meta.Name,
+		MetricID:          "meta.preferred_duration_unit",
+		SourcePath:        meta.SourcePath,
+		SourceLine:        meta.SourceLine,
+		IRNode:            meta.IRNode,
+		GeneratedArtifact: meta.GeneratedArtifact,
+		Evaluator:         meta.Evaluator,
+		ExactlyOne:        true,
+	})
 	plan := Plan{
 		Schema:                ProposalSchema,
 		Decision:              decision,

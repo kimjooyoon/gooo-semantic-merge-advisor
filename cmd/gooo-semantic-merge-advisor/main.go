@@ -63,7 +63,7 @@ func runPlan(args []string) error {
 	if err != nil {
 		return err
 	}
-	phaseWallMS := map[string]int64{"load_inputs": time.Since(loadStarted).Milliseconds()}
+	phaseDurationNS := map[string]int64{"load_inputs": time.Since(loadStarted).Nanoseconds()}
 
 	input := advisor.BuildInput{
 		Left:              left,
@@ -78,18 +78,16 @@ func runPlan(args []string) error {
 		DenominatorDigest: advisor.CanonicalDigest(denominatorBytes),
 	}
 
-	serializeStarted := time.Now()
-	generated, files, err := advisor.GenerateFiles(input, phaseWallMS, advisor.PeakRSSBytes())
+	generated, files, err := advisor.GenerateFiles(input, phaseDurationNS, advisor.PeakRSSBytes())
 	if err != nil {
 		return err
 	}
-	phaseWallMS["serialize_artifacts"] = time.Since(serializeStarted).Milliseconds()
-	writeMS, err := advisor.WriteFiles(*outputDir, files)
+	writeNS, err := advisor.WriteFiles(*outputDir, files)
 	if err != nil {
 		return err
 	}
-	phaseWallMS["write_artifacts"] = writeMS
-	generated, files, err = advisor.GenerateFiles(input, phaseWallMS, advisor.PeakRSSBytes())
+	phaseDurationNS["write_artifacts"] = writeNS
+	generated, files, err = advisor.GenerateFiles(input, phaseDurationNS, advisor.PeakRSSBytes())
 	if err != nil {
 		return err
 	}

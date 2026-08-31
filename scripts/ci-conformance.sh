@@ -19,13 +19,13 @@ run_case() {
     --output "${output_dir}"
 
   jq -e --arg expected "${expected_state}" \
-    '.state == $expected and .improvement == "UNKNOWN" and .source_text_merged == false and .input_repository_writes == 0 and .metrics.repository_writes == 0 and .metrics.local_tests_run == 0 and .metrics.artifact_files == 3 and .metrics.artifact_bytes > 0 and (all(.metrics.phase_wall_ms[]; . >= 0))' \
+    '.state == $expected and .improvement == "UNKNOWN" and .source_text_merged == false and .input_repository_writes == 0 and .metrics.repository_writes == 0 and .metrics.local_tests_run == 0 and .metrics.artifact_files == 3 and .metrics.artifact_bytes > 0 and (all(.metrics.phase_wall_ms[]; . >= 0)) and (.metrics.phase_telemetry | length > 0) and (all(.metrics.phase_telemetry[]; .duration_ns >= 0 and .duration_us >= 0 and .duration_ms >= 0 and .preferred_duration_value >= 0))' \
     "${output_dir}/merge-proposal.json" >/dev/null
   jq -e --arg expected "${expected_state}" \
     '.state == $expected and .improvement == "UNKNOWN" and .source_text_merged == false and .repository_writes == 0 and .input_repository_writes == 0 and .metrics.artifact_files == 3 and .metrics.artifact_bytes > 0' \
     "${output_dir}/authority-receipt.json" >/dev/null
   jq -e --arg expected "${expected_state}" \
-    '.state == $expected and .input_repository_writes == 0 and .metrics.repository_writes == 0 and .metrics.artifact_files == 3' \
+    '.state == $expected and .input_repository_writes == 0 and .metrics.repository_writes == 0 and .metrics.artifact_files == 3 and (.metrics.phase_telemetry | length > 0)' \
     "${output_dir}/counterexample-report.json" >/dev/null
 }
 
@@ -33,6 +33,11 @@ cd "${root_dir}"
 run_case normal authority.json CLOSED
 run_case unknown authority.json UNKNOWN
 run_case refuted authority.json REFUTED
+run_case duration-unknown duration-unknown/authority.json UNKNOWN
+
+jq -e 'all(.metrics.phase_telemetry[]; .duration_ns > 0 and .preferred_duration_unit != "UNKNOWN" and .preferred_duration_value > 0 and .unknown == null)' "${work_dir}/normal/merge-proposal.json" >/dev/null
+jq -e 'all(.metrics.phase_telemetry[]; .duration_ns == 0 and .duration_us == 0 and .duration_ms == 0 and .preferred_duration_unit == "UNKNOWN" and ((.unknown | keys | sort) == ["blocked_by", "next_operation", "reason", "stage", "step", "unknown_class"])) and (.duration_unknowns | length > 0)' "${work_dir}/duration-unknown/merge-proposal.json" >/dev/null
+jq -e 'all(.metrics.phase_telemetry as $telemetry | .metrics.phase_wall_ms | to_entries[]; .value == $telemetry[.key].duration_ms)' "${work_dir}/normal/merge-proposal.json" >/dev/null
 
 jq -e 'all(.cardinality[]; .exactly_one == true)' "${work_dir}/normal/merge-proposal.json" >/dev/null
 jq -e 'all(.unknowns[]; ((.unknown | keys | sort) == ["blocked_by", "next_operation", "reason", "stage", "step", "unknown_class"]))' "${work_dir}/unknown/counterexample-report.json" >/dev/null
@@ -46,6 +51,17 @@ if go run ./cmd/gooo-semantic-merge-advisor plan \
   --denominator contracts/semantic-merge-advisor-denominator-v1.json \
   --output "${work_dir}/malformed" >/dev/null 2>&1; then
   echo "malformed input unexpectedly succeeded" >&2
+  exit 1
+fi
+
+if go run ./cmd/gooo-semantic-merge-advisor plan \
+  --left fixtures/cases/duration-malformed/left.json \
+  --right fixtures/cases/duration-malformed/right.json \
+  --authority fixtures/cases/duration-malformed/authority.json \
+  --source examples/semantic-merge-authority/main.gooo \
+  --denominator contracts/semantic-merge-advisor-denominator-v1.json \
+  --output "${work_dir}/duration-malformed" >/dev/null 2>&1; then
+  echo "malformed duration unexpectedly succeeded" >&2
   exit 1
 fi
 

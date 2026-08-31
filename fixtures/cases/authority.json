@@ -13,5 +13,8 @@
     {"name":"regressionDriver", "source_path":"examples/semantic-merge-authority/main.gooo", "source_line":11, "ir_node":"gooo://ir/regression-driver", "generated_artifact":"generated/regression-driver.go", "evaluator":"evaluators/regression-driver.json", "proof_choice":"REGRESSION", "indicator_class":"DRIVER"},
     {"name":"regressionOutcome", "source_path":"examples/semantic-merge-authority/main.gooo", "source_line":12, "ir_node":"gooo://ir/regression-outcome", "generated_artifact":"generated/regression-outcome.go", "evaluator":"evaluators/regression-outcome.json", "proof_choice":"REGRESSION", "indicator_class":"OUTCOME"},
     {"name":"regressionGuardrail", "source_path":"examples/semantic-merge-authority/main.gooo", "source_line":13, "ir_node":"gooo://ir/regression-guardrail", "generated_artifact":"generated/regression-guardrail.go", "evaluator":"evaluators/regression-guardrail.json", "proof_choice":"REGRESSION", "indicator_class":"GUARDRAIL"}
+  ],
+  "meta_activities": [
+    {"name":"preferredDurationUnit", "source_path":"examples/semantic-merge-authority/main.gooo", "source_line":14, "ir_node":"gooo://ir/preferred-duration-unit", "generated_artifact":"generated/preferred-duration-unit.go", "evaluator":"evaluators/preferred-duration-unit.json"}
   ]
 }

@@ -58,13 +58,55 @@ func TestNormalUnionClosesOnlyExactlyOneBindings(t *testing.T) {
 	if plan.State != StateClosed || plan.Decision != DecisionUnion || plan.Improvement != StateUnknown || report.State != StateClosed {
 		t.Fatalf("unexpected normal result: state=%s decision=%s report=%s", plan.State, plan.Decision, report.State)
 	}
-	if plan.SourceTextMerged || len(plan.Items) != 8 || len(plan.AuthorityBindings) != FixedDenominator {
+	if plan.SourceTextMerged || len(plan.Items) != 8 || len(plan.AuthorityBindings) != FixedDenominator+1 {
 		t.Fatalf("normal result lost non-text or one-to-one evidence: %+v", plan)
 	}
 	for _, item := range plan.Items {
 		if !item.ExactlyOne {
 			t.Fatalf("normal item is not exactly one: %+v", item)
 		}
+	}
+}
+
+func TestPreferredDurationUnitSelectionIsDeterministic(t *testing.T) {
+	tests := []struct {
+		name  string
+		ns    int64
+		unit  string
+		value int64
+	}{
+		{name: "milliseconds", ns: 2_000_000, unit: "ms", value: 2},
+		{name: "microseconds", ns: 1_234, unit: "us", value: 1},
+		{name: "nanoseconds", ns: 123, unit: "ns", value: 123},
+		{name: "unknown", ns: 0, unit: StateUnknown, value: 0},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			telemetry, err := choosePreferredDuration("test", test.ns)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if telemetry.PreferredDurationUnit != test.unit || telemetry.PreferredDurationValue != test.value {
+				t.Fatalf("got %s/%d, want %s/%d", telemetry.PreferredDurationUnit, telemetry.PreferredDurationValue, test.unit, test.value)
+			}
+			if test.ns == 0 && telemetry.Unknown == nil {
+				t.Fatal("zero duration did not preserve UNKNOWN witness")
+			}
+		})
+	}
+}
+
+func TestDurationTelemetryFailsClosedWhenUnobservableOrMalformed(t *testing.T) {
+	observable := false
+	metrics, unknowns, err := phaseMetrics(map[string]int64{"phase": 1234}, AuthorityDeclaration{DurationObservable: &observable})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(unknowns) != 1 || metrics.PhaseTelemetry["phase"].PreferredDurationUnit != StateUnknown {
+		t.Fatalf("unobservable duration was not preserved: %+v %+v", metrics, unknowns)
+	}
+	if _, _, err := phaseMetrics(map[string]int64{"phase": -1}, AuthorityDeclaration{}); err == nil || !strings.Contains(err.Error(), "negative") {
+		t.Fatalf("negative duration did not fail closed: %v", err)
 	}
 }
 
