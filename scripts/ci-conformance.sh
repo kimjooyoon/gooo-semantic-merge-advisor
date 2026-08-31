@@ -19,10 +19,10 @@ run_case() {
     --output "${output_dir}"
 
   jq -e --arg expected "${expected_state}" \
-    '.state == $expected and .source_text_merged == false and .input_repository_writes == 0 and .metrics.repository_writes == 0 and .metrics.local_tests_run == 0 and .metrics.artifact_files == 3 and .metrics.artifact_bytes > 0 and (all(.metrics.phase_wall_ms[]; . >= 0))' \
+    '.state == $expected and .improvement == "UNKNOWN" and .source_text_merged == false and .input_repository_writes == 0 and .metrics.repository_writes == 0 and .metrics.local_tests_run == 0 and .metrics.artifact_files == 3 and .metrics.artifact_bytes > 0 and (all(.metrics.phase_wall_ms[]; . >= 0))' \
     "${output_dir}/merge-proposal.json" >/dev/null
   jq -e --arg expected "${expected_state}" \
-    '.state == $expected and .source_text_merged == false and .repository_writes == 0 and .input_repository_writes == 0 and .metrics.artifact_files == 3 and .metrics.artifact_bytes > 0' \
+    '.state == $expected and .improvement == "UNKNOWN" and .source_text_merged == false and .repository_writes == 0 and .input_repository_writes == 0 and .metrics.artifact_files == 3 and .metrics.artifact_bytes > 0' \
     "${output_dir}/authority-receipt.json" >/dev/null
   jq -e --arg expected "${expected_state}" \
     '.state == $expected and .input_repository_writes == 0 and .metrics.repository_writes == 0 and .metrics.artifact_files == 3' \

@@ -69,6 +69,7 @@ func GenerateFiles(input BuildInput, phaseWallMS map[string]int64, peakRSSBytes 
 			Schema:            ReceiptSchema,
 			State:             plan.State,
 			Decision:          plan.Decision,
+			Improvement:       StateUnknown,
 			LeftTreeDigest:    input.LeftDigest,
 			RightTreeDigest:   input.RightDigest,
 			AuthorityDigest:   input.AuthorityDigest,

@@ -288,6 +288,7 @@ func Build(input BuildInput) (Plan, CounterexampleReport, error) {
 		Schema:                ProposalSchema,
 		Decision:              decision,
 		State:                 state,
+		Improvement:           StateUnknown,
 		Precedence:            append([]string(nil), Precedence...),
 		LeftTreeID:            input.Left.TreeID,
 		RightTreeID:           input.Right.TreeID,

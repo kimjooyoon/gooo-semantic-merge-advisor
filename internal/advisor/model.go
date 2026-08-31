@@ -168,6 +168,7 @@ type Plan struct {
 	Schema                string             `json:"schema"`
 	Decision              string             `json:"decision"`
 	State                 string             `json:"state"`
+	Improvement           string             `json:"improvement"`
 	Precedence            []string           `json:"precedence"`
 	LeftTreeID            string             `json:"left_tree_id"`
 	RightTreeID           string             `json:"right_tree_id"`
@@ -211,6 +212,7 @@ type AuthorityReceipt struct {
 	Schema                string            `json:"schema"`
 	State                 string            `json:"state"`
 	Decision              string            `json:"decision"`
+	Improvement           string            `json:"improvement"`
 	LeftTreeDigest        string            `json:"left_tree_digest"`
 	RightTreeDigest       string            `json:"right_tree_digest"`
 	AuthorityDigest       string            `json:"authority_digest"`

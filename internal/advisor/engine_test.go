@@ -55,7 +55,7 @@ func TestNormalUnionClosesOnlyExactlyOneBindings(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if plan.State != StateClosed || plan.Decision != DecisionUnion || report.State != StateClosed {
+	if plan.State != StateClosed || plan.Decision != DecisionUnion || plan.Improvement != StateUnknown || report.State != StateClosed {
 		t.Fatalf("unexpected normal result: state=%s decision=%s report=%s", plan.State, plan.Decision, report.State)
 	}
 	if plan.SourceTextMerged || len(plan.Items) != 8 || len(plan.AuthorityBindings) != FixedDenominator {
