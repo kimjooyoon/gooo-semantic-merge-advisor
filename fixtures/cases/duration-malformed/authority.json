@@ -1,0 +1,19 @@
+{
+  "schema":"gooo/semantic-merge-advisor/authority/v1",
+  "phase":"OPEN",
+  "ontology_reference":"github.com/kimjooyoon/meta-ontology-go",
+  "ontology_read_only":true,
+  "duration_ns":{"validate_and_plan":-1},
+  "activities":[
+    {"name":"foundationDriver","source_path":"examples/semantic-merge-authority/main.gooo","source_line":5,"ir_node":"gooo://ir/foundation-driver","generated_artifact":"generated/foundation-driver.go","evaluator":"evaluators/foundation-driver.json","proof_choice":"FOUNDATION","indicator_class":"DRIVER"},
+    {"name":"foundationOutcome","source_path":"examples/semantic-merge-authority/main.gooo","source_line":6,"ir_node":"gooo://ir/foundation-outcome","generated_artifact":"generated/foundation-outcome.go","evaluator":"evaluators/foundation-outcome.json","proof_choice":"FOUNDATION","indicator_class":"OUTCOME"},
+    {"name":"foundationGuardrail","source_path":"examples/semantic-merge-authority/main.gooo","source_line":7,"ir_node":"gooo://ir/foundation-guardrail","generated_artifact":"generated/foundation-guardrail.go","evaluator":"evaluators/foundation-guardrail.json","proof_choice":"FOUNDATION","indicator_class":"GUARDRAIL"},
+    {"name":"coherenceDriver","source_path":"examples/semantic-merge-authority/main.gooo","source_line":8,"ir_node":"gooo://ir/coherence-driver","generated_artifact":"generated/coherence-driver.go","evaluator":"evaluators/coherence-driver.json","proof_choice":"COHERENCE","indicator_class":"DRIVER"},
+    {"name":"coherenceOutcome","source_path":"examples/semantic-merge-authority/main.gooo","source_line":9,"ir_node":"gooo://ir/coherence-outcome","generated_artifact":"generated/coherence-outcome.go","evaluator":"evaluators/coherence-outcome.json","proof_choice":"COHERENCE","indicator_class":"OUTCOME"},
+    {"name":"coherenceGuardrail","source_path":"examples/semantic-merge-authority/main.gooo","source_line":10,"ir_node":"gooo://ir/coherence-guardrail","generated_artifact":"generated/coherence-guardrail.go","evaluator":"evaluators/coherence-guardrail.json","proof_choice":"COHERENCE","indicator_class":"GUARDRAIL"},
+    {"name":"regressionDriver","source_path":"examples/semantic-merge-authority/main.gooo","source_line":11,"ir_node":"gooo://ir/regression-driver","generated_artifact":"generated/regression-driver.go","evaluator":"evaluators/regression-driver.json","proof_choice":"REGRESSION","indicator_class":"DRIVER"},
+    {"name":"regressionOutcome","source_path":"examples/semantic-merge-authority/main.gooo","source_line":12,"ir_node":"gooo://ir/regression-outcome","generated_artifact":"generated/regression-outcome.go","evaluator":"evaluators/regression-outcome.json","proof_choice":"REGRESSION","indicator_class":"OUTCOME"},
+    {"name":"regressionGuardrail","source_path":"examples/semantic-merge-authority/main.gooo","source_line":13,"ir_node":"gooo://ir/regression-guardrail","generated_artifact":"generated/regression-guardrail.go","evaluator":"evaluators/regression-guardrail.json","proof_choice":"REGRESSION","indicator_class":"GUARDRAIL"}
+  ],
+  "meta_activities":[{"name":"preferredDurationUnit","source_path":"examples/semantic-merge-authority/main.gooo","source_line":14,"ir_node":"gooo://ir/preferred-duration-unit","generated_artifact":"generated/preferred-duration-unit.go","evaluator":"evaluators/preferred-duration-unit.json"}]
+}
